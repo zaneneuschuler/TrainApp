@@ -1,0 +1,28 @@
+body{
+    background-image: url("../images/toytrain.jpg");
+     
+}
+.bordered{
+    background-color: rgb(255, 255, 255);
+    margin: 5px;
+    border: solid;
+    border-color: #441c0c;
+    border-radius: 5px;
+
+}
+.colored-header{
+    background-color: #441c0c;
+    color: whitesmoke;
+    padding: 5px;
+}
+form{
+    padding: 10px;
+}
+.jumboTheme{
+    background-color: #441c0c;
+    color: whitesmoke;
+}
+
+.my-4{
+    background-color: whitesmoke;
+}
