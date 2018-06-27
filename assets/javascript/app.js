@@ -21,8 +21,8 @@ function pullData() {
                         <th scope="row">${child.name}</th>
                         <td>${child.destination}</td>
                         <td>${child.frequency}</td>
-                        <td>placeholder</td>
-                        <td>placeholder</td>
+                        <td id="nextTrain">${displayNext(child.firstTrain, child.frequency)}</td>
+                        <td id="howLong">${howLongtoNext(child.firstTrain, child.frequency)} minutes</td>
                         <td><button class="btn btn-danger delete" id="${snapshot.key}">X</button></td>
                     `
         );
@@ -34,7 +34,7 @@ function pullData() {
 
 }
 
-$(document).ready(function(){
+$(document).ready(function () {
     $('#submit-button').on('click', function () {
         event.preventDefault();
 
@@ -55,6 +55,7 @@ $(document).ready(function(){
     });
 
     pullData();
+
 });
 
 $(document).on('click', '.delete', function () {
@@ -63,3 +64,34 @@ $(document).on('click', '.delete', function () {
 
     DATABASE.ref().child(id).remove();
 });
+
+function getNextTrain(firstTrain, freq) {
+    let trainMoment = moment(firstTrain, "HH:mm").format("HHmm");
+    let nowMoment = moment().format("HHmm");
+    console.log("Now: " + nowMoment);
+    console.log("Current train: " + trainMoment);
+    let train = parseInt(trainMoment);
+    let now = parseInt(nowMoment);
+    while (train < now) {
+        train += parseInt(freq);
+
+    }
+
+    newTrain = moment(train, "HHmm");
+    console.log(newTrain);
+    return newTrain;
+
+
+}
+
+function howLongtoNext(firstTrain, freq) {
+    let currentTrain = getNextTrain(firstTrain, freq);
+    let now = moment();
+    return currentTrain.diff(now, 'minutes');
+
+}
+
+function displayNext(firstTrain, freq) {
+    let currentTrain = getNextTrain(firstTrain, freq);
+    return currentTrain.format("hh:mm a");
+}
