@@ -76,6 +76,10 @@ function getNextTrain(firstTrain, freq) {
         train += parseInt(freq);
 
     }
+    var rx = /[69][0-9]$/; 
+    if (rx.test(train)) {
+        train +=40;
+    }
 
     newTrain = moment(train, "HHmm");
     console.log(newTrain);
