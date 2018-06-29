@@ -66,24 +66,19 @@ $(document).on('click', '.delete', function () {
 });
 
 function getNextTrain(firstTrain, freq) {
-    let trainMoment = moment(firstTrain, "HH:mm").format("HHmm");
-    let nowMoment = moment().format("HHmm");
+    let trainMoment = moment(firstTrain, "HH:mm");
+    let nowMoment = moment();
+    console.log("Is train moment earlier than now" + trainMoment.isBefore(nowMoment, "minute"))
     console.log("Now: " + nowMoment);
     console.log("Current train: " + trainMoment);
-    let train = parseInt(trainMoment);
-    let now = parseInt(nowMoment);
-    while (train < now) {
-        train += parseInt(freq);
+    console.log(typeof freq);
+
+    while (trainMoment.isSameOrBefore(nowMoment, "minute")) {
+        trainMoment.add(parseInt(freq), "m")
 
     }
-    var rx = /[69][0-9]$/; 
-    if (rx.test(train)) {
-        train +=40;
-    }
-
-    newTrain = moment(train, "HHmm");
-    console.log(newTrain);
-    return newTrain;
+    console.log(trainMoment);
+    return trainMoment;
 
 
 }
